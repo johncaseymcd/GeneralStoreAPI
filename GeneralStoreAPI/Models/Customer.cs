@@ -11,9 +11,15 @@ namespace GeneralStoreAPI.Models
         [Key]
         public int CustomerID { get; set; }
         [Required]
-        public string CustomerFirstName { get; set; }
+        public string FirstName { get; set; }
         [Required]
-        public string CustomerLastName { get; set; }
-        public string CustomerFullName { get; }
+        public string LastName { get; set; }
+        public string FullName 
+        {
+            get
+            {
+                return $"{FirstName} {LastName}";
+            }
+        }
     }
 }
