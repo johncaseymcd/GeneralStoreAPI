@@ -26,9 +26,11 @@ namespace GeneralStoreAPI.Controllers
                 return BadRequest(ModelState);
 
             _context.Customers.Add(model);
-            await _context.SaveChangesAsync();
+            
+            if(await _context.SaveChangesAsync() > 0)
+                return Ok("Customer successfully added!");
 
-            return Ok("Customer successfully added!");
+            return InternalServerError();
         }
 
         // Get all customers
