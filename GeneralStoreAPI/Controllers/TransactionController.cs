@@ -15,15 +15,25 @@ namespace GeneralStoreAPI.Controllers
         private readonly GeneralStoreDbContext _context = new GeneralStoreDbContext();
 
         // Create a new transaction
-        // api/Transaction
+        [Route("api/Transaction")]
         [HttpPost]
         public async Task<IHttpActionResult> CreateTransaction([FromBody] Transaction model)
         {
+            model.DateOfTransaction = DateTimeOffset.Now;
+            model.Product = _context.Products.Find(model.ProductID);
+            model.Customer = _context.Customers.Find(model.CustomerID);
+
             if (model is null)
                 return BadRequest("Please enter transaction data.");
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            if (model.Product is null)
+                return BadRequest("Product does not exist.");
+
+            if (model.Customer is null)
+                return BadRequest("Customer does not exist.");
 
             if (!model.Product.IsInStock)
                 return BadRequest("Product is not currently in stock. Check back later.");
@@ -41,7 +51,7 @@ namespace GeneralStoreAPI.Controllers
         }
 
         // Get all transactions
-        // api/Transaction
+        [Route("api/Transaction/all")]
         [HttpGet]
         public async Task<IHttpActionResult> GetAllTransactions()
         {
@@ -49,10 +59,10 @@ namespace GeneralStoreAPI.Controllers
             return Ok(transactions);
         }
 
-        // Get all transactions by Customer ID
-        // api/Transaction
+        // Get all transactions by Customer
+        [Route("api/Transaction/Customer/{id}")]
         [HttpGet]
-        public async Task<IHttpActionResult> GetTransactionsByCustomerID([FromBody] int id)
+        public async Task<IHttpActionResult> GetTransactionsByCustomerName([FromUri] int id)
         {
             var query = _context
                 .Transactions
@@ -62,7 +72,8 @@ namespace GeneralStoreAPI.Controllers
                     {
                         TransactionID = e.TransactionID,
                         CustomerID = e.CustomerID,
-                        CustomerFullName = e.Customer.FullName,
+                        CustomerFirstName = e.Customer.FirstName,
+                        CustomerLastName = e.Customer.LastName,
                         ProductSKU = e.Product.ProductSKU,
                         ProductName = e.Product.ProductName,
                         ProductCost = e.Product.ProductCost,
@@ -76,7 +87,7 @@ namespace GeneralStoreAPI.Controllers
         }
 
         // Get transaction by transaction ID
-        // api/Transaction/{id}
+        [Route("api/Transaction/{id}")]
         [HttpGet]
         public async Task<IHttpActionResult> GetTransactionByTransID([FromUri] int id)
         {
@@ -89,7 +100,7 @@ namespace GeneralStoreAPI.Controllers
         }
 
         // Update existing transaction by ID
-        // api/Transaction/{id}
+        [Route("api/Transaction/{id}")]
         [HttpPut]
         public async Task<IHttpActionResult> UpdateTransaction([FromUri] int id, [FromBody] Transaction newTransaction)
         {
@@ -100,9 +111,17 @@ namespace GeneralStoreAPI.Controllers
                 return BadRequest(ModelState);
 
             Transaction transaction = await _context.Transactions.FindAsync(id);
+            newTransaction.Product = _context.Products.Find(newTransaction.ProductID);
+            newTransaction.Customer = _context.Customers.Find(newTransaction.CustomerID);
 
             if (transaction is null)
                 return NotFound();
+
+            if (newTransaction.Product is null)
+                return BadRequest("Product does not exist.");
+
+            if (newTransaction.Customer is null)
+                return BadRequest("Customer does not exist.");
 
             if (!newTransaction.Product.IsInStock)
                 return BadRequest($"{newTransaction.Product.ProductName} is currently out of stock. Please try again later.");
@@ -111,10 +130,11 @@ namespace GeneralStoreAPI.Controllers
                 return BadRequest($"We do not have enough {newTransaction.Product.ProductName} in stock to complete your order. Please adjust the quantity.");
 
             transaction.CustomerID = newTransaction.CustomerID;
-            transaction.ProductSKU = newTransaction.ProductSKU;
+            transaction.Customer = newTransaction.Customer;
+            transaction.ProductID = newTransaction.ProductID;
+            transaction.Product = newTransaction.Product;
             transaction.Product.ProductStockLevel -= newTransaction.ItemCount;
             transaction.ItemCount = newTransaction.ItemCount;
-            transaction.DateOfTransaction = newTransaction.DateOfTransaction;
 
             if (await _context.SaveChangesAsync() > 0)
                 return Ok("Transaction was successfully updated!");
@@ -123,7 +143,7 @@ namespace GeneralStoreAPI.Controllers
         }
 
         // Delete a transaction by ID
-        // api/Transaction/{id}
+        [Route("api/Transaction/{id}")]
         [HttpDelete]
         public async Task<IHttpActionResult> DeleteTransaction([FromUri] int id)
         {

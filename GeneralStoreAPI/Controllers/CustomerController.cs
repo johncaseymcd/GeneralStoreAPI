@@ -74,7 +74,7 @@ namespace GeneralStoreAPI.Controllers
             customer.FirstName = newCustomer.FirstName;
             customer.LastName = newCustomer.LastName;
 
-            if (await _context.SaveChangesAsync() <= 0)
+            if (await _context.SaveChangesAsync() > 0)
                 return Ok("Customer information successfully updated!");
 
             return InternalServerError();

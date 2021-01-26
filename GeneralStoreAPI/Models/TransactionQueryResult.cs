@@ -9,7 +9,8 @@ namespace GeneralStoreAPI.Models
     {
         public int TransactionID { get; set; }
         public int CustomerID { get; set; }
-        public string CustomerFullName { get; set; }
+        public string CustomerFirstName { get; set; }
+        public string CustomerLastName { get; set; }
         public string ProductSKU { get; set; }
         public string ProductName { get; set; }
         public double ProductCost { get; set; }

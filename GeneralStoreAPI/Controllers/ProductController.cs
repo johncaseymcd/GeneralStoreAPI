@@ -45,9 +45,9 @@ namespace GeneralStoreAPI.Controllers
         // Get product by SKU
         // api/Product/{sku}
         [HttpGet]
-        public async Task<IHttpActionResult> GetProductByID([FromUri] string sku)
+        public async Task<IHttpActionResult> GetProductByID([FromUri] int id)
         {
-            Product product = await _context.Products.FindAsync(sku);
+            Product product = await _context.Products.FindAsync(id);
 
             if (product is null)
                 return NotFound();
@@ -58,15 +58,15 @@ namespace GeneralStoreAPI.Controllers
         // Update existing product by SKU
         // api/Product/{sku}
         [HttpPut]
-        public async Task<IHttpActionResult> UpdateProduct([FromUri] string sku, [FromBody] Product newProduct)
+        public async Task<IHttpActionResult> UpdateProduct([FromUri] int id, [FromBody] Product newProduct)
         {
-            if (sku != newProduct.ProductSKU)
-                return BadRequest("SKUs do not match.");
+            if (id != newProduct.ProductID)
+                return BadRequest("IDs do not match.");
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            Product product = await _context.Products.FindAsync(sku);
+            Product product = await _context.Products.FindAsync(id);
 
             if (product is null)
                 return NotFound();
@@ -74,6 +74,7 @@ namespace GeneralStoreAPI.Controllers
             product.ProductName = newProduct.ProductName;
             product.ProductCost = newProduct.ProductCost;
             product.ProductStockLevel = newProduct.ProductStockLevel;
+            product.ProductSKU = newProduct.ProductSKU;
 
             if (await _context.SaveChangesAsync() > 0)
                 return Ok("Product was successfully updated!");
@@ -84,9 +85,9 @@ namespace GeneralStoreAPI.Controllers
         // Delete an existing product by SKU
         // api/Product/{sku}
         [HttpDelete]
-        public async Task<IHttpActionResult> DeleteProduct([FromUri] string sku)
+        public async Task<IHttpActionResult> DeleteProduct([FromUri] int id)
         {
-            Product product = await _context.Products.FindAsync(sku);
+            Product product = await _context.Products.FindAsync(id);
 
             if (product is null)
                 return NotFound();

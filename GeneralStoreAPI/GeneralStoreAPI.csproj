@@ -214,6 +214,27 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101260345022_InitialMigration.cs" />
+    <Compile Include="Migrations\202101260345022_InitialMigration.Designer.cs">
+      <DependentUpon>202101260345022_InitialMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101260423140_AddedProductIDProperty.cs" />
+    <Compile Include="Migrations\202101260423140_AddedProductIDProperty.Designer.cs">
+      <DependentUpon>202101260423140_AddedProductIDProperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101260440390_UpdatedProductSKUProperty.cs" />
+    <Compile Include="Migrations\202101260440390_UpdatedProductSKUProperty.Designer.cs">
+      <DependentUpon>202101260440390_UpdatedProductSKUProperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101260442046_RemovedInstantiationFromProductSKU.cs" />
+    <Compile Include="Migrations\202101260442046_RemovedInstantiationFromProductSKU.Designer.cs">
+      <DependentUpon>202101260442046_RemovedInstantiationFromProductSKU.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101260537375_RemovedRequiredAttributeFromDateOfTransactionProperty.cs" />
+    <Compile Include="Migrations\202101260537375_RemovedRequiredAttributeFromDateOfTransactionProperty.Designer.cs">
+      <DependentUpon>202101260537375_RemovedRequiredAttributeFromDateOfTransactionProperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -221,6 +242,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Transaction.cs" />
+    <Compile Include="Models\TransactionQueryResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
@@ -316,6 +338,23 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202101260345022_InitialMigration.resx">
+      <DependentUpon>202101260345022_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101260423140_AddedProductIDProperty.resx">
+      <DependentUpon>202101260423140_AddedProductIDProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101260440390_UpdatedProductSKUProperty.resx">
+      <DependentUpon>202101260440390_UpdatedProductSKUProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101260442046_RemovedInstantiationFromProductSKU.resx">
+      <DependentUpon>202101260442046_RemovedInstantiationFromProductSKU.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101260537375_RemovedRequiredAttributeFromDateOfTransactionProperty.resx">
+      <DependentUpon>202101260537375_RemovedRequiredAttributeFromDateOfTransactionProperty.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

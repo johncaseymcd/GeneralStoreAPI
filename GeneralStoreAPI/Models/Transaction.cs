@@ -14,30 +14,15 @@ namespace GeneralStoreAPI.Models
         
         [ForeignKey(nameof(Customer))]
         public int CustomerID { get; set; }
-        public virtual Customer Customer
-        {
-            get
-            {
-                GeneralStoreDbContext ctx = new GeneralStoreDbContext();
-                return ctx.Customers.Find(CustomerID);
-            }
-        }
-
+        public virtual Customer Customer { get; set; }
+        
         [ForeignKey(nameof(Product))]
-        public string ProductSKU { get; set; }
-        public virtual Product Product
-        {
-            get
-            {
-                GeneralStoreDbContext ctx = new GeneralStoreDbContext();
-                return ctx.Products.Find(ProductSKU);
-            }
-        }
-
+        public int ProductID { get; set; }
+        public virtual Product Product { get; set; }
+        
         [Required]
         public int ItemCount { get; set; }
 
-        [Required]
         public DateTimeOffset DateOfTransaction { get; set; }
     }
 }
