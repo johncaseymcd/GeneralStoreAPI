@@ -112,8 +112,8 @@ namespace GeneralStoreAPI.Controllers
                 return BadRequest(ModelState);
 
             Transaction transaction = await _context.Transactions.FindAsync(id); // Find the Transaction ID in the database
-            newTransaction.Product = _context.Products.Find(newTransaction.ProductID); // Get the Product by the user-given ID
-            newTransaction.Customer = _context.Customers.Find(newTransaction.CustomerID); // Get the Customer by the user-given ID
+            newTransaction.Product = await _context.Products.FindAsync(newTransaction.ProductID); // Get the Product by the user-given ID
+            newTransaction.Customer = await _context.Customers.FindAsync(newTransaction.CustomerID); // Get the Customer by the user-given ID
 
             if (transaction is null) // Return 404 if the transaction does not exist
                 return NotFound();
