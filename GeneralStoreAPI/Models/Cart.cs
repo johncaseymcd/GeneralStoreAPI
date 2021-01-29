@@ -16,7 +16,8 @@ namespace GeneralStoreAPI.Models
         public int CustomerID { get; set; }
         public virtual Customer Customer { get; set; }
 
-        public List<string> ProductSKUs { get; set; }
+        public virtual List<Product> Products { get; set; } = new List<Product>();
+        public virtual Product Product { get; set; }
 
         public DateTimeOffset TransactionDate { get; set; }
     }

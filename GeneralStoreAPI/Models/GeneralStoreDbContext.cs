@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace GeneralStoreAPI.Models
 {
@@ -11,7 +12,6 @@ namespace GeneralStoreAPI.Models
         public GeneralStoreDbContext()
             : base("DefaultConnection")
         {
-
         }
 
         public DbSet<Customer> Customers { get; set; }
