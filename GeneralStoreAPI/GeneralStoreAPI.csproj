@@ -234,9 +234,14 @@
     <Compile Include="Migrations\202101260537375_RemovedRequiredAttributeFromDateOfTransactionProperty.Designer.cs">
       <DependentUpon>202101260537375_RemovedRequiredAttributeFromDateOfTransactionProperty.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101290116260_AddedCartClass.cs" />
+    <Compile Include="Migrations\202101290116260_AddedCartClass.Designer.cs">
+      <DependentUpon>202101290116260_AddedCartClass.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\GeneralStoreDbContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -354,6 +359,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101260537375_RemovedRequiredAttributeFromDateOfTransactionProperty.resx">
       <DependentUpon>202101260537375_RemovedRequiredAttributeFromDateOfTransactionProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101290116260_AddedCartClass.resx">
+      <DependentUpon>202101290116260_AddedCartClass.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
